@@ -1559,3 +1559,76 @@ div.container .logout-btn:hover {
     transform: translateY(0px) rotate(0deg);
   }
 }
+* {
+  box-sizing: border-box;
+}
+
+/* ===================== RESPONSIVE CONTROL LAYER ===================== */
+
+/* STEP 2 — Force consistent card sizing */
+.container,
+.card,
+div.container {
+  width: 92% !important;
+  max-width: 420px !important;
+  margin: auto !important;
+  box-sizing: border-box;
+}
+
+/* STEP 3 + STEP 4 — Mobile optimization */
+@media (max-width: 600px) {
+
+  /* Reduce heading sizes */
+  .logo {
+    font-size: 36px !important;
+  }
+
+  h1, h2, .welcome-title {
+    font-size: 20px !important;
+  }
+
+  /* Card spacing fix */
+  .container,
+  .card,
+  div.container {
+    padding: 16px !important;
+    border-radius: 18px !important;
+  }
+
+  /* Large score text fix */
+  #cardScore {
+    font-size: 48px !important;
+  }
+
+  /* Inputs for touch usability */
+  input,
+  select {
+    font-size: 14px !important;
+    padding: 10px !important;
+  }
+
+  /* Buttons optimized for touch */
+  button {
+    font-size: 14px !important;
+    padding: 10px 14px !important;
+  }
+
+  /* STEP 4 — Disable heavy animations on mobile */
+  .heart,
+  .cursor-glow,
+  .cloud,
+  .star {
+    display: none !important;
+  }
+
+  /* Reduce animation load */
+  * {
+    animation-duration: 1.2s !important;
+  }
+}
+
+/* Extra safety: prevent horizontal scroll issues */
+html, body {
+  width: 100%;
+  overflow-x: hidden;
+}
