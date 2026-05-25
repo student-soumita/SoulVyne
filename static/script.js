@@ -2,15 +2,19 @@
 
 let introMusic = document.getElementById("introMusic");
 let audioUnlocked = false;
+function unlockAudioOnce() {
+  if (audioUnlocked) return;
 
-function unlockAudio() {
-  if (audioUnlocked) return;
+  introMusic.volume = 0.5;
 
-  introMusic.volume = 0.5;
-  introMusic.play().catch(() => {});
-  audioUnlocked = true;
-
-  document.getElementById("audioUnlock").remove();
+  introMusic.play()
+    .then(() => {
+      audioUnlocked = true;
+    })
+    .catch(() => {});
+  
+  document.removeEventListener("click", unlockAudioOnce);
+  document.removeEventListener("touchstart", unlockAudioOnce);
 }
 
 window.addEventListener("click", unlockAudio);
@@ -25,7 +29,7 @@ window.addEventListener("load", () => {
   document.querySelector(".container").style.opacity = "0";
 
   // play intro music
-  introMusic.play().catch(() => {});
+  //introMusic.play().catch(() => {});//
 
   // KEEP SPLASH VISIBLE FIRST
   setTimeout(() => {
