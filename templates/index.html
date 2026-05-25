@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Soulvyn 💖 Love Calculator</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+  <div id="storyScene" class="story-scene"></div>
+  <div id="questionScene" class="question-scene hidden">
+  <div id="questionText"></div>
+
+  <div class="answer-buttons">
+    <button onclick="answerLove(true)">Yes 💖</button>
+    <button onclick="answerLove(false)">No 💔</button>
+  </div>
+</div>
+  <div id="sky" class="sky"></div>
+  <div id="netflixIntro" class="netflix-intro">
+  <div class="flash"></div>
+
+  <div class="logo-wrap">
+    <h1 class="logo">💕SoulVyn💞</h1>
+    <p class="tag">A mystical bond of love and inner feelings......</p>
+  </div>
+</div>
+
+<audio id="introSound" src="{{ url_for('static', filename='intro.mp3') }}"></audio>
+
+<audio id="introMusic"
+src="{{ url_for('static', filename='intro.mp3') }}"
+preload="auto"></audio>
+
+<audio id="bgMusic" loop>
+  <source src="{{ url_for('static', filename='romantic.mp3') }}" type="audio/mpeg">
+</audio>
+
+<div id="audioUnlock"></div>
+
+<!-- SPLASH -->
+<div id="splashScreen" class="splash">
+  <div class="cinema">
+    <h1 class="logo">Soulvyn 💖</h1>
+    <p class="tagline">A mystical bond of love and inner feelings.</p>
+  </div>
+</div>
+<div id="heartIntro" class="heart-intro">
+
+  <div class="heart-half left-half">❤️</div>
+
+  <div class="heart-half right-half">❤️</div>
+
+  <div class="love-burst"></div>
+
+</div>
+
+<!-- LOGIN -->
+<div id="loginBox" class="login-box">
+  <h2>💖 Welcome</h2>
+  <input type="text" id="username" placeholder="Username">
+  <input type="password" id="password" placeholder="Password">
+  <!-- Put this right under your password input or error paragraph -->
+<div style="margin-top: 10px; text-align: right;">
+  <a href="#" onclick="resetLoginCredentials(); return false;" style="color: #dfcdd1; font-size: 13px; text-decoration: none;">
+    Forgot Account / Reset Credentials? 🔒
+  </a>
+</div>
+
+  <button onclick="login()">Login</button>
+  <p id="loginError"></p>
+   <!-- Add this near your existing login button inside your loginBox container -->
+<button type="button" onclick="resetLoginCredentials()" class="reset-login-btn">
+  Reset System Account ⚙️
+</button>
+</div>
+
+  
+<!-- APP -->
+<div class="container">
+    <div id="heartConnect" class="heart-connect hidden">
+      <div class="beam"></div>
+  <div class="static-heart left">❤️‍🔥</div>
+  <div class="static-heart center">❤️‍🔥</div>
+  <div class="static-heart right">❤️‍🔥</div>
+  
+</div>
+<div id="particleLayer"></div>
+
+  <h1 class="app-title">Soulvyn 💖</h1>
+  <p id="userGreeting"></p>
+  <button onclick="logout()">Logout</button>
+
+  <input type="text" id="name1" placeholder="Your Name">
+  <input type="text" id="name2" placeholder="Crush Name">
+  <input type="date" id="dob1">
+  <input type="date" id="dob2">
+  
+
+  <button onclick="calculateLove()">Calculate</button>
+
+  <div class="result-box">
+    <h2 id="result">0%</h2>
+
+    <div class="progress">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+    
+
+    <p id="message">Enter names and calculate ❤️</p>
+    <p id="zodiacResult"></p>
+    
+
+    <audio id="bgMusic" loop>
+      <source src="romantic.mp3" type="audio/mpeg">
+    </audio>
+
+    <button onclick="toggleMusic()">🎵 Music</button>
+    <select id="musicSelector" onchange="changeMusic()">
+
+    <option value="{{ url_for('static', filename='romantic.mp3') }}">
+Romantic Piano 🎹
+</option>
+
+<option value="{{ url_for('static', filename='romantic1.mp3') }}">
+Soft Love 💖
+</option>
+
+<option value="{{ url_for('static', filename='romantic2.mp3') }}">
+Dreamy Night 🌙
+</option>
+    </select>
+
+    <button onclick="resetApp()">Reset</button>
+
+  </div>
+</div>
+
+<!-- Cleaned element declaration -->
+<div id="loveCard" class="love-card">
+  <div class="card">
+    <h2 id="cardNames"></h2>
+    <p id="cardZodiac"></p>
+    <h1 id="cardScore"></h1>
+    <p id="cardMessage"></p>
+    <!-- 💌 THE LOVE NOTE CONTAINER -->
+  <div class="love-note-box" style="margin: 15px 0; padding: 10px; background: #fff0f3; border-radius: 10px; border-left: 4px solid #ff4d6d;">
+    <p id="cardMessage" style="font-style: italic; color: #c9184a; margin-bottom: 5px;"></p>
+    <!-- ✨ Clickable link to change the message instantly -->
+    <span onclick="changeLoveNote()" style="font-size: 12px; color: #ff4d6d; cursor: pointer; text-decoration: underline;">🔄 Change note</span>
+  </div>
+    <button onclick="shareLoveCard()" style="background: #ff4d6d; color: white; margin-right: 10px;">
+      Share Result 🚀
+    </button>
+    <button onclick="closeLoveCard()">Close</button>
+  </div>
+</div>
+<!-- Marriage Card Popup -->
+<div id="marriageCardOverlay" class="marriage-card-overlay">
+
+  <div class="marriage-box">
+
+    <h2>🌸 Love Marriage Garden 🌸</h2>
+
+    <div class="garden-row">
+      <span id="userMarriageLabel"></span>
+      <p id="userMarriageText"></p>
+    </div>
+
+    <div class="garden-row">
+      <span id="crushMarriageLabel"></span>
+      <p id="crushMarriageText"></p>
+    </div>
+    <p class="marriage-note">
+  💞 If you want to connect two hearts, press Continue.
+</p>
+
+    <!-- CHOICE BUTTONS -->
+    <div style="margin-top:20px; display:flex; gap:10px;">
+
+      <button class="btn-continue" onclick="acceptMarriageCard()">
+        Continue 💖
+      </button>
+
+      <button class="btn-continue" onclick="skipMarriageCard()">
+        Skip 🌙
+      </button>
+      <button class="btn-continue" onclick="shareMarriageCard()">
+  Share 💌
+</button>
+
+    </div>
+
+  </div>
+
+</div>
+<!-- 1. The Game Choice Popup -->
+<div id="gameChoice" class="game-choice hidden">
+  <div class="choice-box">
+    <h2>Play Heart Merge Challenge? 💖</h2>
+    <div class="choice-buttons">
+      <button onclick="acceptGame()">Yes ✨</button>
+      <button onclick="skipGame()">Skip 🌙</button>
+    </div>
+  </div>
+</div> <!-- This closing tag MUST be right here! -->
+
+<!-- 2. The Actual Game Area (Completely separate) -->
+<div id="mergeGame" class="merge-game hidden">
+  <h2 class="merge-title">Reconnect The Hearts 💖</h2>
+  <div class="game-area">
+    <div id="leftHeart" class="drag-heart left">❤️</div>
+    <div id="rightHeart" class="drag-heart right">❤️</div>
+    <div id="mergeGlow"></div>
+  </div>
+  
+  <p id="mergeMessage"></p>
+  
+  <!-- 🌟 THE CLOSE BUTTON PLACEHOLDER -->
+  <button id="gameCloseBtn" class="game-close-btn" onclick="forceCloseGame()">Close 🌙</button>
+</div>
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
